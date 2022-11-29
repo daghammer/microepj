@@ -2,6 +2,7 @@
 
 <head>
 <title>Micro EPJ med SFM i iframe</title>
+<link rel="icon" type="image/x-icon" href="./favicon.ico">
 <style>
 form { border-bottom  : 1px solid ; }
 .label { color : blue; }
@@ -23,6 +24,10 @@ form { border-bottom  : 1px solid ; }
 		*/
 		
 		window.onload = function () {
+			/* set intitial iframe src from select: */
+			document.getElementById("sfm_iframe").src = document.getElementById("portal").value;
+			document.getElementById("url").innerHTML = document.getElementById("portal").value;
+		
 			var iframeWin = document.getElementById("sfm_iframe").contentWindow,
 				loginform = document.getElementById("loginform"),
 				myCode = document.getElementById("code"),
@@ -30,7 +35,8 @@ form { border-bottom  : 1px solid ; }
 				myApiEndpoint = document.getElementById("apiEndpoint"),
 				myPatientTicket =document.getElementById("patientTicket"),
 				myShowAllergies = document.getElementById("showAllergies"),
-				myOnBehalfOf = document.getElementById("onBehalf")
+				myOnBehalfOf = document.getElementById("onBehalf"),
+				myPortal = document.getElementById("portal")
 				;
 
 			 
@@ -59,15 +65,19 @@ form { border-bottom  : 1px solid ; }
 				let patientTicket =  myPatientTicket.value ;
 				let showAllergies =  myShowAllergies.checked ;
 				let onBehalfOf = myOnBehalfOf.value;
-				  
-				 
-				 
+
 				let msg = {'action' : 'setPatient', 'ticket' : patientTicket, 'showAllergies' : showAllergies, 'onBehalfOf' : onBehalfOf };
-				  
-				  document.getElementById("melding").innerHTML = JSON.stringify(  msg ); 
-				  
-				 iframeWin.postMessage(msg, "*");  
+				document.getElementById("melding").innerHTML = JSON.stringify(  msg ); 
+				iframeWin.postMessage(msg, "*");  
 				 
+				return false;
+			};
+			portalform.onsubmit = function () {
+				let portal =  myPortal.value ;
+				document.getElementById("melding").innerHTML = "...";
+				document.getElementById("svarmelding").innerHTML = "...";
+				document.getElementById("url").innerHTML = portal;
+				document.getElementById("sfm_iframe").src = portal;  
 				return false;
 			};
 		
@@ -83,7 +93,22 @@ form { border-bottom  : 1px solid ; }
 
 <body>
 <h1>Micro EPJ med SFM i iframe</h1>
- 
+
+<form id="portalform" action="/">
+<table>
+		<tr><td>Velg portal:</td><td>
+		<!-- <input type="text" id="portal" value="https://client.test2.forskrivning.no/v30/" size='80'> -->
+		<select id="portal">
+		<option selected value="https://client.test2.forskrivning.no/v30/">Pasientportal</option>
+		<option value="https://health-personnel-portal.test2.forskrivning.no/v30">Helsepersonellportal</option>
+		<option value="https://enterprise-portal.test2.forskrivning.no/v30">Virksomhetsportal</option>
+		<option value="https://display-portal.test2.forskrivning.no/v30">Displayportal</option>
+		</select>
+		
+		
+</table>
+<input type="submit" value="Velg portal">
+</form> 
 <form id="loginform" action="/">
 	<table>
 		<tr><td>Code from create session:</td><td><input type="text" id="code" value="Code" size='120'></td></tr>
@@ -103,11 +128,11 @@ form { border-bottom  : 1px solid ; }
 	<input type="submit" value="SetPatient">
 
 </form>
-
+<div class="messagebox"><span class="label">iframe.src:</span><span class="message" id="url"  > </span></div>
 <div class="messagebox"><span class="label">Til iframe:</span><span class="message" id="melding"  > </span></div>
 <div class="messagebox"><span class="label">Fra iframe:</span><span class="message" id="svarmelding"  > </span></div>
  
-<iframe id="sfm_iframe" src="https://client.test2.forskrivning.no/v30/" width="99%" height="800px">
+<iframe id="sfm_iframe" src="" width="99%" height="800px">
 </iframe>
 
  
