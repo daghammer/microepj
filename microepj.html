@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<title>Micro EPJ med SFM i iframe</title>
+<style>
+form { border-bottom  : 1px solid ; }
+.label { color : blue; }
+.message { border  : 1px solid; color : maroon; background :gold; } 
+.messagebox { margin-bottom : 8px ; }
+ input[type=submit] { margin-bottom : 8px ; width : 80px; background : lightgreen;  }
+</style>
+
+<script>
+
+		
+		function displayMessage (evt) {
+			var message;
+			document.getElementById("svarmelding").innerHTML = JSON.stringify(evt.data);
+		};
+		/*if(window.addEventListener) {
+			window.addEventListener("message", dispayMessage, false);
+		};
+		*/
+		
+		window.onload = function () {
+			var iframeWin = document.getElementById("sfm_iframe").contentWindow,
+				loginform = document.getElementById("loginform"),
+				myCode = document.getElementById("code"),
+				myNonce = document.getElementById("nonce"),
+				myApiEndpoint = document.getElementById("apiEndpoint"),
+				myPatientTicket =document.getElementById("patientTicket"),
+				myShowAllergies = document.getElementById("showAllergies"),
+				myOnBehalfOf = document.getElementById("onBehalf")
+				;
+
+			 
+
+			loginform.onsubmit = function () {
+				
+				 
+				let sessionCode =  myCode.value ;
+				let sessionNonce =  myNonce.value ;
+				let apiEndpoint = myApiEndpoint.value;
+				  
+				 
+				 
+				let msg = {'action' : 'login', 'code' : sessionCode, 'nonce' : sessionNonce, 'apiEndpoint' : apiEndpoint };
+				  
+				  document.getElementById("melding").innerHTML = JSON.stringify(  msg ); 
+				  
+				 iframeWin.postMessage(msg, "*");  
+				 
+				return false;
+			};
+		
+			patientform.onsubmit = function () {
+				
+				 
+				let patientTicket =  myPatientTicket.value ;
+				let showAllergies =  myShowAllergies.checked ;
+				let onBehalfOf = myOnBehalfOf.value;
+				  
+				 
+				 
+				let msg = {'action' : 'setPatient', 'ticket' : patientTicket, 'showAllergies' : showAllergies, 'onBehalfOf' : onBehalfOf };
+				  
+				  document.getElementById("melding").innerHTML = JSON.stringify(  msg ); 
+				  
+				 iframeWin.postMessage(msg, "*");  
+				 
+				return false;
+			};
+		
+		};
+		
+		if(window.addEventListener) {
+				window.addEventListener("message", displayMessage, false);
+			};
+
+</script>
+
+</head>
+
+<body>
+<h1>Micro EPJ med SFM i iframe</h1>
+ 
+<form id="loginform" action="/">
+	<table>
+		<tr><td>Code from create session:</td><td><input type="text" id="code" value="Code" size='120'></td></tr>
+		<tr><td>Nonce[b64]:</td><td><input type="text" id="nonce" value="Nonce" size='120'></td></tr>
+		<tr><td>Api endpoint:</td><td><input type="text" id="apiEndpoint" value="https://server.test2.forskrivning.no/v30" size='40'></td></tr>
+	</table>
+	<input type="submit" value="Login">
+
+</form>
+
+<form id="patientform" action="/">
+	<table>
+		<tr><td>PatientTicket:</td><td><input type="text" id="patientTicket" value="PatientTicket" size='50'></td></tr>
+		<tr><td>Show allergies</td><td><input type="checkbox" id="showAllergies" checked="true"  ></td></tr>
+		<tr><td>On behalf [HRR]</td><td><input type="text" id="onBehalf" value="" size='20'></td></tr>
+	</table>
+	<input type="submit" value="SetPatient">
+
+</form>
+
+<div class="messagebox"><span class="label">Til iframe:</span><span class="message" id="melding"  > </span></div>
+<div class="messagebox"><span class="label">Fra iframe:</span><span class="message" id="svarmelding"  > </span></div>
+ 
+<iframe id="sfm_iframe" src="https://client.test2.forskrivning.no/v30/" width="99%" height="800px">
+</iframe>
+
+ 
+
+</body>
+
+<html>
