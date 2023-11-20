@@ -653,7 +653,7 @@
 			"response": []
 		},
 		{
-			"name": "Metadata Copy",
+			"name": "Metadata No token",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -784,6 +784,18 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "session_base_url",
+			"value": "https://session.test2.forskrivning.no/api",
+			"type": "string"
+		},
+		{
+			"key": "datashare_base_url",
+			"value": "https://datashare.test2.forskrivning.no",
+			"type": "string"
 		}
 	]
 }
