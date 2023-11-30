@@ -18,14 +18,16 @@ iframe.sfm_iframe { background-color : lightgrey ; }
 
 <script>
 
-		function generateEncounterId () {
+		function generateEncounterIdentifier () {
 			var uuid;
 			uuid = "abcd";
 			uuid = generateUUID();
 			/* uuid = crypto.randonUUID(); */
-			document.getElementById("encounterId").value = uuid;
+			document.getElementById("encounterIdentifier").value = uuid;
 		};
-		
+		function clearThis( element  ) {
+			element.innerHTML = "";
+		}
 		/* below function is not safe, but the preferred crypto.randomUUID() is not available in file based context */
 		function generateUUID() { // Public Domain/MIT
 			var d = new Date().getTime();//Timestamp
@@ -45,7 +47,7 @@ iframe.sfm_iframe { background-color : lightgrey ; }
 		
 		function displayMessage (evt) {
 			var message;
-			document.getElementById("svarmelding").innerHTML = JSON.stringify(evt.data);
+			document.getElementById("svarmelding").innerHTML = JSON.stringify(evt.data) + "--" + document.getElementById("svarmelding").innerHTML;
 		};
 		
 		function showSelectedURL (selectObject) {
@@ -114,7 +116,7 @@ iframe.sfm_iframe { background-color : lightgrey ; }
 				myShowLib = document.getElementById("showLib"),
 				myOnBehalfOf = document.getElementById("onBehalf"),
 				myPortal = document.getElementById("portal"),
-				myEncounter = document.getElementById("encounterId")
+				myEncounter = document.getElementById("encounterIdentifier")
 				;
 
 			 
@@ -130,7 +132,7 @@ iframe.sfm_iframe { background-color : lightgrey ; }
 				 
 				let msg = {'action' : 'login', 'code' : sessionCode, 'nonce' : sessionNonce, 'apiEndpoint' : apiEndpoint };
 				  
-				  document.getElementById("melding").innerHTML = JSON.stringify(  msg ); 
+				  document.getElementById("melding").innerHTML = JSON.stringify(  msg ) + "---" + document.getElementById("melding").innerHTML; 
 				  
 				 iframeWin.postMessage(msg, "*");  
 				 
@@ -145,10 +147,10 @@ iframe.sfm_iframe { background-color : lightgrey ; }
 				let showLib = myShowLib.checked;
 				
 				let onBehalfOf = myOnBehalfOf.value;
-				let encounterId = myEncounter.value;
+				let encounterIdentifier = myEncounter.value;
 
-				let msg = {'action' : 'setPatient', 'ticket' : patientTicket, 'showAllergies' : showAllergies,'showLib' : showLib, 'onBehalfOf' : onBehalfOf, 'encounterId' : encounterId };
-				document.getElementById("melding").innerHTML = JSON.stringify(  msg ); 
+				let msg = {'action' : 'setPatient', 'ticket' : patientTicket, 'showAllergies' : showAllergies,'showLib' : showLib, 'onBehalfOf' : onBehalfOf, 'encounterIdentifier' : encounterIdentifier };
+				document.getElementById("melding").innerHTML = JSON.stringify(  msg ) + "---" + document.getElementById("melding").innerHTML; 
 				iframeWin.postMessage(msg, "*");  
 				 
 				return false;
@@ -210,14 +212,14 @@ iframe.sfm_iframe { background-color : lightgrey ; }
 		<tr><td>Show allergies</td><td><input type="checkbox" id="showAllergies" checked="true"  ></td></tr>
 		<tr><td>Show Lib</td><td><input type="checkbox" id="showLib" checked="true"  ></td></tr>
 		<tr><td>On behalf [HRR]</td><td><input type="text" id="onBehalf" value="" size='20'></td></tr>
-		<tr><td>Encounter id</td><td><input type="text" id="encounterId" value="" size='50' ondblclick="generateEncounterId()"><span class="info"> <-- dblclick for ny UUID</span></td></tr>
+		<tr><td>Encounter identifier</td><td><input type="text" id="encounterIdentifier" value="" size='50' ondblclick="generateEncounterIdentifier()"><span class="info"> <-- dblclick for ny UUID</span></td></tr>
 	</table>
 	<input type="submit" value="SetPatient">
 
 </form>
 <div class="messagebox"><span class="label">iframe.src:</span><span class="message" id="url"  > </span></div>
-<div class="messagebox"><span class="label">Til iframe:</span><span class="message" id="melding"  > </span></div>
-<div class="messagebox"><span class="label">Fra iframe:</span><span class="message" id="svarmelding"  > </span></div>
+<div class="messagebox"><span class="label">Til iframe:</span><span class="message" id="melding" ondblclick="clearThis(this);" > </span></div>
+<div class="messagebox"><span class="label">Fra iframe:</span><span class="message" id="svarmelding" ondblclick="clearThis(this);" > </span></div>
  
 <iframe class="sfm_iframe" id="sfm_iframe" src="" width="99%" height="1200px">
 </iframe>
