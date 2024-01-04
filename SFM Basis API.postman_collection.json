@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "039a9851-652d-4f34-b131-d44092c9fffa",
+		"name": "SFM Basis API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14807644"
+	},
+	"item": [
+		{
+			"name": "Organization",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Person",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Practitioner",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "metadata",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "metadata no token",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getMedication",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"resourceType\": \"Parameters\",\r\n  \"parameter\": [\r\n    {\r\n      \"name\": \"patient\",\r\n      \"resource\": {\r\n        \"resourceType\": \"Patient\",\r\n        \"meta\": {\r\n          \"profile\": [\r\n            \"http://ehelse.no/fhir/StructureDefinition/sfm-Patient\"\r\n          ]\r\n        },\r\n        \"identifier\": [\r\n          {\r\n            \"use\": \"official\",\r\n            \"system\": \"urn:oid:2.16.578.1.12.4.1.4.1\",\r\n            \"value\": \"25039296929\"\r\n          }\r\n        ],\r\n        \"active\": true,\r\n        \"name\": [\r\n          {\r\n            \"extension\": [\r\n              {\r\n                \"url\": \"http://hl7.no/fhir/StructureDefinition/no-basis-middlename\",\r\n                \"valueString\": \"Dag\"\r\n              }\r\n            ],\r\n            \"family\": \"Hammer\",\r\n            \"given\": [\r\n              \"Troy\"\r\n            ]\r\n          }\r\n        ],\r\n        \"gender\": \"male\",\r\n        \"birthDate\": \"1992-03-25\",\r\n        \"address\": [\r\n          {\r\n            \"use\": \"home\",\r\n            \"type\": \"physical\",\r\n            \"line\": [\r\n              \"Testveien 1\"\r\n            ],\r\n            \"city\": \"Oslo\",\r\n            \"postalCode\": \"1234\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Referansenummer\",\r\n      \"valueString\": \"1234567890\"\r\n    },\r\n    {\r\n      \"name\": \"historyTimestamp\",\r\n      \"valueDateTime\": \"2023-06-28T00:00:00+02:00\"\r\n    },\r\n    {\r\n      \"name\": \"SamtykkeKjernejournal\",\r\n      \"valueCode\": \"HPUNNTAK\"\r\n    },\r\n    {\r\n      \"name\": \"SamtykkeSperretLegemidler\",\r\n      \"valueCode\": \"HPMOTTATTSAMTYKKE\"\r\n    },\r\n    {\r\n      \"name\": \"SamtykkeLasteResepter\",\r\n      \"valueCode\": \"HPMOTTATTSAMTYKKE\"\r\n    },\r\n    {\r\n      \"name\": \"IncludeOriginal\",\r\n      \"valueCode\": \"include_reseptdok\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://base-fhir.test3.forskrivning.no/Patient/$getMedication",
+					"protocol": "https",
+					"host": [
+						"base-fhir",
+						"test3",
+						"forskrivning",
+						"no"
+					],
+					"path": [
+						"Patient",
+						"$getMedication"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc4NjY3RjkwREMxMUJGMDRCRDk0NjdEMUY5MTIwQzRBNDM0MEI0Q0YiLCJ4NXQiOiJlR1pfa053UnZ3UzlsR2ZSLVJJTVNrTkF0TTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2hlbHNlaWQtc3RzLnRlc3QubmhuLm5vIiwibmJmIjoxNzAyNjU0Mzg4LCJpYXQiOjE3MDI2NTQzODgsImV4cCI6MTcwMjY1NDk4OCwiYXVkIjoiZS1oZWxzZTpzZm0uYXBpIiwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsImhlbHNlaWQ6Ly9zY29wZXMvaWRlbnRpdHkvcGlkIiwiaGVsc2VpZDovL3Njb3Blcy9pZGVudGl0eS9zZWN1cml0eV9sZXZlbCIsImhlbHNlaWQ6Ly9zY29wZXMvaHByL2hwcl9udW1iZXIiLCJoZWxzZWlkOi8vc2NvcGVzL2lkZW50aXR5L2Fzc3VyYW5jZV9sZXZlbCIsImUtaGVsc2U6c2ZtLmFwaS9zZm0uYXBpIl0sImFtciI6WyJwd2QiXSwiY2xpZW50X2lkIjoiN2Y4MTI5YWMtZWI0NC00ZWI0LTkxOTUtNjc3MjU2N2NjODRkIiwiY2xpZW50X2FtciI6InByaXZhdGVfa2V5X2p3dCIsImhlbHNlaWQ6Ly9jbGFpbXMvY2xpZW50L2NsYWltcy9vcmducl9wYXJlbnQiOiIxMDAxMDAxMjYiLCJzdWIiOiJ0enRvNmdQaHlUUXcyYlIvV2wwa2dGL21USCtqZFFvVUJ2YVlTT2JmbWxRPSIsImF1dGhfdGltZSI6MTcwMjY1NDM4NywiaWRwIjoidGVzdGlkcC1vaWRjIiwiaGVsc2VpZDovL2NsYWltcy9pZGVudGl0eS9waWQiOiIxNzA1NjYwMDU3NCIsImhlbHNlaWQ6Ly9jbGFpbXMvaWRlbnRpdHkvc2VjdXJpdHlfbGV2ZWwiOiI0IiwiaGVsc2VpZDovL2NsYWltcy9pZGVudGl0eS9hc3N1cmFuY2VfbGV2ZWwiOiJoaWdoIiwiaGVsc2VpZDovL2NsYWltcy9ocHIvaHByX251bWJlciI6IjQzMTAwMTExMCIsIm9sZHN1YiI6ImN1MnV5bGxhbXJmSUZIUVVFejlZbVdiVDNjTFBFQ2JLNnN1ZTV3dHpRZDA9IiwiaGVsc2VpZDovL2NsYWltcy9jbGllbnQvYW1yIjoicnNhX3ByaXZhdGVfa2V5IiwiZS1oZWxzZTpzZm0uYXBpL2NsaWVudC9jbGFpbXMvc2ZtLWlkIjoiN2FkZmJiMDctZjAwOC00ZGNiLWEwYWEtYTRiZDQwYjI3YzAyIiwic2lkIjoiQ0Q2QTg4M0UwN0ExNzk3RDVFQkQ0N0REMDBBMEJFREIiLCJqdGkiOiI2NkYxMjg3RDY3QzAwNjk4MzFEODcxRTJCNDMxMzIwMSJ9.pLce1EBGEy_nF6lCEdsFoKO8tO-1G7j2BxOYKKrLXrSF8UcC8moQ5f-OXkNr2OUZL1Jkhx9BBJUWrvwZhfhNUU9mo16d9_Her4391sIL_EHj-w7tk6kg_cw6Jj4QWi46JSEuWfeZJwblENUjiSpFkv81nnoNGbNjYdWvubMFvedY4Jdz2jkxsxIkczLb7OOpcpQ_G_lo_lJckdwLAc-mDMW92IW8mHTF4HkAxOHluPOztdTPedSZ9OV3z-Z4aRurI96UzgHP0gGxjuLscTkinKHrkFuVLCrUQaKJIziCeUlWFTaODdkWaVRaIVaaUmSkMLvXVWDnoKQmrnI-lXjKtJoWUW7B7xRjbZKXeju8ohhPLRYSF_8QNSwduRb10S6KIIz1wSftkQ5BN5xCadoqbwsf_hg26miw95PW1QJ_8C9uwigUblb2M6K7ZBJIHv7fKtcmdriANBuXDO3fhaJujNvQ4svGLaTrKilpDAtZeLXAjyVpW9qeDKguXxVpYiwA",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "sfm_basis_url",
+			"value": "https://base-fhir.test3.forskrivning.no/",
+			"type": "string"
+		}
+	]
+}
